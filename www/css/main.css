@@ -1,0 +1,33 @@
+body {
+
+}
+
+#wraper {
+    margin: 0 auto;
+    border: 1px solid #000;
+    width: 600px;
+    padding: 15px;
+}
+
+#message_viewer {
+    padding: 5px;
+    height: 350px;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+#chat_form {
+    padding-top: 10px;
+}
+
+#message_input {
+    width: 540px;
+}
+
+form label.error, form span.error {
+    color: red;
+}
+
+form input.error {
+    border-color: red;
+}
