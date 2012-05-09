@@ -254,8 +254,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
             mkdir($sessDir);
             chmod($sessDir, 0777);
         }
-        
-        touch($sessDir . "/" . $chatSessIdValue);
+        file_put_contents($sessDir . "/" . $chatSessIdValue, $_POST['nickname']);
         chmod($sessDir . "/" . $chatSessIdValue, 0777);
         
         header("location: index.php");

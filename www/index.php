@@ -36,7 +36,9 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
     if (isset ($_COOKIE["chatSessId"])) { 
         if (file_exists("../data/sess/" . $_COOKIE["chatSessId"]) ) {
             if (trim($_POST['message']) != ''){
-               file_put_contents("../data/messages.txt", $_POST['message']."\r\n", FILE_APPEND); 
+                $date = date('m/d/Y h:i:s a');
+                $currentUser = file_get_contents("../data/sess/" . $_COOKIE['chatSessId']);
+                file_put_contents("../data/messages.txt", "[" . $date . "] " . $currentUser . ": " . $_POST['message']."\r\n", FILE_APPEND); 
             } 
         } else {
             header("location: users.php?action=login-form");
