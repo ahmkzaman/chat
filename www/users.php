@@ -7,7 +7,6 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="wraper">
@@ -117,7 +116,6 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
             <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
             <link rel="stylesheet" type="text/css" href="css/main.css" />
             <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-            <script type="text/javascript" src="js/main.js"></script>
         </head>
         <body>
             <div id="wraper">
@@ -176,7 +174,6 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="wraper">
@@ -249,7 +246,20 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     }
     
     if ($isNicknameValid && $isPasswordValid) {
-        echo'Logging in';
+        $chatSessIdValue = md5(uniqid($_POST['nickname'], true));
+        setcookie("chatSessId", $chatSessIdValue);
+        $sessDir = "../data/sess";
+        
+        if ( !file_exists($sessDir) ) {
+            mkdir($sessDir);
+            chmod($sessDir, 0777);
+        }
+        
+        touch($sessDir . "/" . $chatSessIdValue);
+        chmod($sessDir . "/" . $chatSessIdValue, 0777);
+        
+        header("location: index.php");
+        
     } else {
         echo '<!DOCTYPE html>
 <html>
@@ -257,7 +267,6 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-        <script type="text/javascript" src="js/main.js"></script>
     </head>
     <body>
         <div id="wraper">
