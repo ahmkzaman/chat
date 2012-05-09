@@ -1,11 +1,11 @@
 <?php
 
+require_once "../src/functions/common.php";
+
 if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
     
-    if (isset ($_COOKIE["chatSessId"])) { 
-        
-        if (file_exists("../data/sess/" . $_COOKIE["chatSessId"]) ) {
-            echo '<!DOCTYPE html>
+    if ( user_is_logged_in() ) {
+        echo '<!DOCTYPE html>
     <html>
         <head>
             <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
@@ -24,53 +24,25 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
             <div>
         </body>
     </html>';
-        } else {
-            header("location: users.php?action=login-form");
-        }
-    
     } else {
         header("location: users.php?action=login-form");
     }
-    
+   
 } else if ( $_REQUEST['action'] == "post-message" ) {
-    if (isset ($_COOKIE["chatSessId"])) { 
-        if (file_exists("../data/sess/" . $_COOKIE["chatSessId"]) ) {
-            if (trim($_POST['message']) != ''){
-                $date = date('m/d/Y h:i:s a');
-                $currentUser = file_get_contents("../data/sess/" . $_COOKIE['chatSessId']);
-                file_put_contents("../data/messages.txt", "[" . $date . "] " . $currentUser . ": " . $_POST['message']."\r\n", FILE_APPEND); 
-            } 
-        } else {
-            header("location: users.php?action=login-form");
-        }
-        
+    
+    if ( user_is_logged_in() ) {
+        chat_add_message($_POST['message']);
     } else {
         header("location: users.php?action=login-form");
     }
         
 } else if ( $_REQUEST['action'] == "get-messages" ){
-    if (isset ($_COOKIE["chatSessId"])) { 
-        if (file_exists("../data/sess/" . $_COOKIE["chatSessId"]) ) {
-            if ( file_exists('../data/messages.txt') ){
-                $messages = file('../data/messages.txt');
-                $messages = array_slice($messages, -50);
-
-                foreach ($messages as $key => $value ){
-                    $messages[$key] = htmlspecialchars($value);
-                }
-
-                echo implode('<br/>', $messages);
-            } else {
-                echo "Chat is not working. Sorry.";
-
-            }
-        } else {
-             header("location: users.php?action=login-form");
-        }
-    } else {
-         header("location: users.php?action=login-form");
-    }
     
+    if ( user_is_logged_in() ) {
+        echo chat_get_last_messages(50);
+    } else {
+        header("location: users.php?action=login-form");
+    }
     
 } else {
     header('HTTP/1.1 404 Not Found');

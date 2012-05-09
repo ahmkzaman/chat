@@ -1,4 +1,5 @@
 <?php
+require_once "../src/functions/common.php";
 
 if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         echo '<!DOCTYPE html>
@@ -34,19 +35,9 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         $isNicknameValid = false;
         $nicknameError = 'Invalid nickname. Nickname should contain no spaces.<br />';
         
-    } else { 
-        
-        $usersArray = file('../data/users.dat');
-
-        foreach ($usersArray as $value) {
-            $userInfo = explode(" ", $value);
-            if ($userInfo[0] == $_POST['nickname']) {
-                $isNicknameValid = false;
-                $nicknameError = "This username is aready taken";
-                break;
-            }   
-
-        }       
+    }  else if ( user_find_by_nickname($_POST['nickname']) !== false ) { 
+        $isNicknameValid = false;
+        $nicknameError = "This username is aready taken";       
     }
     
     $isEmailValid = true;
@@ -59,19 +50,11 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         $isEmailValid = false;
         $emailError = 'Email invalid';
     
-    } else {
-        $usersArray = file('../data/users.dat');
+    } else if ( user_find_by_email($_POST['email']) !== false ) { 
+        $isEmailValid = false;
+        $emailError = "This e-mail is aready taken";      
+    } 
 
-        foreach ($usersArray as $value) {
-            $userInfo = explode(" ", $value);
-            if ($userInfo[1] == $_POST['email']) {
-                $isEmailValid = false;
-                $emailError = "This e-mail is aready taken";
-                break;
-            } 
-
-        }
-    }
     
     $isPasswordValid = true;
     $passwordError = "";
@@ -97,18 +80,11 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     }
     
     if ($isConfPassValid && $isEmailValid && $isNicknameValid && $isPasswordValid) {
-        $filePath = "../data/users.dat";
-        $userInfo = $_POST['nickname'] . " " . $_POST['email'] . " " . md5($_POST['password']) . "\n";
-        $fp = fopen($filePath, "a+");     
-        chmod($filePath, 0777);
-        fwrite($fp, $userInfo);
-        fclose($fp);
-        
+        user_register($_POST['nickname'], $_POST['email'], $_POST['password']);
         // 2. Send email with confirmation link
         
         header("location: index.php");
     } else {
-        
 
         echo '<!DOCTYPE html>
     <html>
@@ -202,61 +178,27 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     if ( !isset($_POST['nickname']) || $_POST['nickname'] == "" ) {
         $isNicknameValid = false;
         $nicknameError = 'Nickname required'; 
-    } else {
-        
-        $usersArray = file('../data/users.dat');
-
-        $userExists = false;
-        foreach ($usersArray as $value) {
-            $userInfo = explode(" ", $value);
-            if ($userInfo[0] == $_POST['nickname']) {
-                $userExists = true;
-                break;
-            }
-        }
-        
-        if ( !$userExists ) {
-            $isNicknameValid = false;
-            $nicknameError = "Invalid nickname";
-        }
-    
+    } else if ( user_find_by_nickname($_POST['nickname']) === false ) { 
+        $isNicknameValid = false;
+        $nicknameError = "Invalid nickname";       
     }
     
     if ( !isset($_POST['password']) || trim($_POST['password']) == "" ) {
         $isPasswordValid = false;
         $passwordError = 'Password is required';
+        
     } else {
-        $usersArray = file('../data/users.dat');
-        
-        $passwordMatch = false;
-        foreach ($usersArray as $value) {
-            $userInfo = explode(" ", $value);
-            if ($userInfo[0] == $_POST['nickname']) {
-                if (trim($userInfo[2]) == md5($_POST['password'])) {
-                    $passwordMatch = true;
-                    break;
-                }
+        $userInfo = user_find_by_nickname($_POST['nickname']);
+        if ( $userInfo !== false ) {
+            if ( $userInfo['password'] != md5($_POST['password']) ) {
+                $isPasswordValid = false;
+                $passwordError = "Incorrect password";
             }
-        }
-        
-        if ( !$passwordMatch ) {
-            $isPasswordValid = false;
-            $passwordError = "Incorrect password";
         }
     }
     
     if ($isNicknameValid && $isPasswordValid) {
-        $chatSessIdValue = md5(uniqid($_POST['nickname'], true));
-        setcookie("chatSessId", $chatSessIdValue);
-        $sessDir = "../data/sess";
-        
-        if ( !file_exists($sessDir) ) {
-            mkdir($sessDir);
-            chmod($sessDir, 0777);
-        }
-        file_put_contents($sessDir . "/" . $chatSessIdValue, $_POST['nickname']);
-        chmod($sessDir . "/" . $chatSessIdValue, 0777);
-        
+        user_login($_POST['nickname']);
         header("location: index.php");
         
     } else {
