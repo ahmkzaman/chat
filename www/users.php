@@ -88,59 +88,8 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         header("location: index.php");
     } else {
 
-        echo '<!DOCTYPE html>
-    <html>
-        <head>
-            <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
-            <link rel="stylesheet" type="text/css" href="css/main.css" />
-             <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
-            <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-        </head>
-        <body>
-            <div id="wraper">
-            <h1>Registration form</h1>
-            <form action="users.php?action=register-user" method="POST">';
-
-        if ( $isNicknameValid ) {
-            echo '<label for="nickname">Nickname</label><br/>
-                <input id="nickname" type="text" value="' . htmlspecialchars($_POST['nickname']) . '" name="nickname" /><br/><br/>';
-        } else {
-            echo '<label for="nickname" class="error">Nickname</label><br/>
-                <input id="nickname" type="text" value="' . htmlspecialchars($_POST['nickname']) . '" name="nickname" class="error" /><span class="error">' . $nicknameError . '</span><br/><br/>';
-        }
-
-
-        if ( $isEmailValid ) {
-            echo '<label for="email">E-Mail</label><br/>
-                <input id="email" type="text" value="' . htmlspecialchars($_POST['email']) . '" name="email" /><br/><br/>';
-        }  else {
-            echo '<label for="email" class="error">E-Mail</label><br/>
-                <input id="email" type="text" value="' . htmlspecialchars($_POST['email']) . '" name="email" class="error" /><span class="error">' . $emailError . '</span><br/><br/>';
-        }
-
-        if ($isPasswordValid) {
-            echo '<label for="password">Password</label><br/>
-                <input id="password" type="password" value="' . htmlspecialchars($_POST['password']) . '" name="password" /><br/><br/>';
-        } else {
-            echo '<label for="password" class="error">Password</label><br/>
-                <input id="password" type="password" value="' . htmlspecialchars($_POST['password']) . '" name="password" class="error" /><span class="error">' . $passwordError . '</span><br/><br/>';
-        }
-
-        if ($isConfPassValid) {
-            echo '<label for="confirm-password" >Retype password</label><br/>
-                <input id="confirm-password" type="password" value="' . htmlspecialchars($_POST['confirm-password']) . '" name="confirm-password" /><br/><br/>';
-        } else {
-            echo '<label for="confirm-password" class="error">Retype password</label><br/>
-                <input id="confirm-password" type="password" value="' . htmlspecialchars($_POST['confirm-password']) . '" name="confirm-password" class="error" /><span class="error">' . $confPassError . '</span><br/><br/>';
-        }
-
-        echo '<input type="submit" value="Register" />
-            </form>
-            <div>
-        </body>
-    </html>';
-
-
+        include "../src/templates/registration-form.php";
+        
     }    
     
 } else if ( $_REQUEST['action'] == "confirm-registration" ) {
