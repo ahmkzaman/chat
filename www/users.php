@@ -7,6 +7,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     <head>
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
+          <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     </head>
     <body>
@@ -18,6 +19,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
             <label for="password">Password</label><br/>
             <input id="password" type="password" value="" name="password" /><br/><br/>
             <input type="submit" value="Login" />
+            <a class="register" href="users.php?action=registration-form">or Register</a>
         </form>
         <div>
     </body>
@@ -44,7 +46,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     $emailError = "";
     if ( !isset($_POST['email']) || trim($_POST['email']) == "" ) {
         $isEmailValid = false;
-        $emailError = 'Email is required';
+        $emailError = 'Email required';
                 
     } else if ( !preg_match('/^[^0-9][a-zA-Z0-9_]*([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/i', $_POST['email']) ) { 
         $isEmailValid = false;
@@ -60,7 +62,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     $passwordError = "";
     if ( !isset($_POST['password']) || trim($_POST['password']) == "" ) {
         $isPasswordValid = false;
-        $passwordError = 'Password is required';
+        $passwordError = 'Password required';
         
     } else if ( strlen($_POST['password']) < 8 ) { 
         $isPasswordValid = false;
@@ -91,6 +93,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         <head>
             <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
             <link rel="stylesheet" type="text/css" href="css/main.css" />
+             <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
             <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
         </head>
         <body>
@@ -149,6 +152,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     <head>
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
+         <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     </head>
     <body>
@@ -163,7 +167,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
             <input id="password" type="password" value="" name="password" /><br/><br/>
             <label for="confirm-password">Retype password</label><br/>
             <input id="confirm-password" type="password" value="" name="confirm-password" /><br/><br/>
-            <input type="submit" value="Register" />
+           <input type="submit" value="Register" />
         </form>
         <div>
     </body>
@@ -185,7 +189,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     
     if ( !isset($_POST['password']) || trim($_POST['password']) == "" ) {
         $isPasswordValid = false;
-        $passwordError = 'Password is required';
+        $passwordError = 'Password required';
         
     } else {
         $userInfo = user_find_by_nickname($_POST['nickname']);
@@ -207,6 +211,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
     <head>
         <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
+         <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
     </head>
     <body>
@@ -231,6 +236,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
             }
             
             echo '<input type="submit" value="Login" />
+                         <a class="register" href="users.php?action=registration-form">or Register</a>
         </form>
         <div>
     </body>

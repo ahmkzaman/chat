@@ -10,6 +10,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
         <head>
             <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
             <link rel="stylesheet" type="text/css" href="css/main.css" />
+            <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
             <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
             <script type="text/javascript" src="js/main.js"></script>
         </head>
@@ -47,6 +48,6 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
 } else {
     header('HTTP/1.1 404 Not Found');
     echo "<h1>404 Not Found</h1>";
-    echo "The page that you have requested could not be found.";
+    echo "The page that you've requested could not be found.";
 }
 

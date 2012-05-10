@@ -2,17 +2,26 @@ body {
 
 }
 
+form {
+    margin-bottom: 0;
+    margin-top: 16px;
+}
+
 #wraper {
     margin: 0 auto;
     border: 1px solid #000;
     width: 600px;
     padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
 }
 
 #message_viewer {
     padding: 5px;
     height: 350px;
-    border: 1px solid #000;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
     overflow: auto;
 }
 
@@ -28,6 +37,22 @@ form label.error, form span.error {
     color: red;
 }
 
+form label {
+    margin-bottom: -13px;
+}
+
+form span.error {
+    position: relative;
+    bottom: 4px;
+    left: 10px;
+}
+
 form input.error {
     border-color: red;
 }
+
+.register  {
+    position: relative;
+    bottom: 4px;
+}
+
