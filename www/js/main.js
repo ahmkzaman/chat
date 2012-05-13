@@ -22,8 +22,6 @@ $(function(){
             return false;
         }
         $('#message_input').focus();
-    });
-
-    
+    });   
 
 });

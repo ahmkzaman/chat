@@ -27,6 +27,5 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
     
 } else {
     header('HTTP/1.1 404 Not Found');
-    echo "<h1>404 Not Found</h1>";
-    echo "The page that you've requested could not be found.";
+     include "../src/templates/page404.php";
 }

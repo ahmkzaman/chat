@@ -155,41 +155,7 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
         header("location: index.php");
         
     } else {
-        echo '<!DOCTYPE html>
-<html>
-    <head>
-        <meta content="text/html;charset=UTF-8" http-equiv="content-type" />
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
-         <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.css" />
-        <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-    </head>
-    <body>
-        <div id="wraper">
-        <h1>Login</h1>
-        <form action="users.php?action=login-user" method="POST">';
-            
-            if ( $isNicknameValid ) {
-                echo '<label for="nickname">Nickname</label><br/>
-                    <input id="nickname" type="text" value="' . htmlspecialchars($_POST['nickname']) . '" name="nickname" /><br/><br/>';
-            } else {
-                echo '<label for="nickname" class="error">Nickname</label><br/>
-                    <input id="nickname" type="text" value="' . htmlspecialchars($_POST['nickname']) . '" name="nickname" class="error" /><span class="error">' . $nicknameError . '</span><br/><br/>';
-            }
-            
-            if ($isPasswordValid) {
-                echo '<label for="password">Password</label><br/>
-                <input id="password" type="password" value="' . htmlspecialchars($_POST['password']) . '" name="password" /><br/><br/>';
-            } else {
-                echo '<label for="password" class="error">Password</label><br/>
-                <input id="password" type="password" value="' . htmlspecialchars($_POST['password']) . '" name="password" class="error" /><span class="error">' . $passwordError . '</span><br/><br/>';
-            }
-            
-            echo '<input type="submit" value="Login" />
-                         <a class="register" href="users.php?action=registration-form">or Register</a>
-        </form>
-        <div>
-    </body>
-</html>';
+         include "../src/templates/login-form.php";
     }
 } else if ( $_REQUEST['action'] == "forgot-password-form" ) {
     echo 'Forgot password';
@@ -200,9 +166,14 @@ if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "login-form" ) {
 } else if ( $_REQUEST['action'] == "reset-password" ) {
     echo 'Reset password';
     
+ } else if ( $_REQUEST['action'] == "logout-user" ) {
+    $sessDir = "../data/sess";
+    $currentCookie = $_COOKIE['chatSessId'];
+    $usersFile = $sessDir. "/" .  $currentCookie;
+    unlink($usersFile );
+   header("location: index.php");
+    
 } else {
     header('HTTP/1.1 404 Not Found');
-    echo "<h1>404 Not Found</h1>";
-    echo "The page that you have requested could not be found.";
-    
+     include "../src/templates/page404.php";
 }

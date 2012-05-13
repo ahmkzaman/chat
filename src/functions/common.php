@@ -20,6 +20,7 @@ function user_is_logged_in()
 function user_get_logged_in_nickname() 
 {
     return file_get_contents("../data/sess/" . $_COOKIE['chatSessId']);
+   
 }
 
 function  chat_add_message($message) {
@@ -42,7 +43,6 @@ function chat_get_last_messages ($messagesToDisplay) {
         return implode('<br/>', $messages);
     } else {
         return "Chat is not working. Sorry.";
-
     }
 }
 
