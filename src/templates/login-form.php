@@ -28,7 +28,7 @@
             <?php endif ?>
             
                 <input type="submit" value="Login" />
-                <a class="register" href="users.php?action=registration-form">or Register</a>
+                <a class="register" href="users.php?action=register-user">or Register</a>
         </form>
         <div>
     </body>
