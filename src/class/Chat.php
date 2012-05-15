@@ -11,7 +11,7 @@ class Chat {
         }
     }
 
-    public function getMessages() {
+    public function getMessages($messagesToDisplay) {
         $messages = file($this->storage);
         $messages = array_slice($messages, -$messagesToDisplay);
 

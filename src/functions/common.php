@@ -30,21 +30,6 @@ function  chat_add_message($message) {
     }
 }
 
-function chat_get_last_messages ($messagesToDisplay) {
-    if ( file_exists('../data/messages.txt') ){
-        $messages = file('../data/messages.txt');
-        $messages = array_slice($messages, -$messagesToDisplay);
-
-        foreach ($messages as $key => $value ){
-            $messages[$key] = htmlspecialchars($value);
-        }
-
-        return implode('<br/>', $messages);
-    } else {
-        return "Chat is not working. Sorry.";
-    }
-}
-
 function user_find_by_nickname($nickname) {
     $usersArray = file('../data/users.dat');
     foreach ($usersArray as $value) {
