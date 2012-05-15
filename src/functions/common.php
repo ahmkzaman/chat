@@ -26,8 +26,7 @@ function user_get_logged_in_nickname()
 function  chat_add_message($message) {
     if (trim($message) != ''){
         $date = date('m/d/Y h:i:s a');
-        var_dump(user_get_logged_in_nickname());
-        file_put_contents("../data/messages.txt", "[" . $date . "] " . user_get_logged_in_nickname() . ": " . $_POST['message']."\r\n", FILE_APPEND);
+        file_put_contents("../data/messages.txt", "[" . $date . "] " . user_get_logged_in_nickname() . ": " . $message ."\r\n", FILE_APPEND);
     }
 }
 

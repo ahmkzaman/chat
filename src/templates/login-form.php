@@ -9,7 +9,7 @@
     <body>
         <div id="wraper">
         <h1>Login</h1>
-        <form action="users.php?action=login-user" method="POST">
+        <form action="index.php?action=index&controller=users" method="POST">
             
             <?php if ( $isNicknameValid ): ?>
                 <label for="nickname">Nickname</label><br/>
@@ -28,7 +28,7 @@
             <?php endif ?>
             
                 <input type="submit" value="Login" />
-                <a class="register" href="users.php?action=register-user">or Register</a>
+                <a class="register" href="index.php?action=register-user&controller=users">or Register</a>
         </form>
         <div>
     </body>

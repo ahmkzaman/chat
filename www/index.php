@@ -2,15 +2,20 @@
 
 require_once "../src/functions/common.php";
 
-if ( !isset($_REQUEST['action']) || $_REQUEST['action'] == "index" ) {
-    include "../src/actions/index/index.php";
-   
-} else if ( $_REQUEST['action'] == "post-message" ) {
-    include "../src/actions/index/post-message.php";
-        
-} else if ( $_REQUEST['action'] == "get-messages" ){
-    include "../src/actions/index/get-messages.php";
-  
+$controller = "index";
+if ( isset($_REQUEST['controller']) ) {
+    $controller = $_REQUEST['controller'];
+}
+
+$action = 'index';
+if ( isset($_REQUEST['action']) ) {
+    $action = $_REQUEST['action'];
+}  
+
+$dir = "../src/actions/" . $controller . "/";
+if ( file_exists($dir . $action . ".php") ) {
+    include $dir . $action . ".php";   
 } else {
     include "../src/actions/error/404.php";
 }
+

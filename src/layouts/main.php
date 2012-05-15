@@ -7,17 +7,10 @@
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </head>
-    <body>
-        
+    <body> 
         <div id="wraper">
-            <div class =" logout"><?php echo user_get_logged_in_nickname() ?>, <a id="logoutBtn" href="index.php?action=logout-user&controller=users" >logout</a></div>
-            <h1>Chat Local</h1>
-            <div id="message_viewer">Message viewer</div>
-        <form id="chat_form">
-        <input id="message_input" type="text" value="Enter message here" />
-        <input id="send_button" type="button" value="Send" />
-        </form>
-
+            <h1><?php echo $title ?></h1>
+            <?php echo $content ?>
         <div>
     </body>
 </html>

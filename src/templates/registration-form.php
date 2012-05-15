@@ -9,7 +9,7 @@
     <body>
         <div id="wraper">
         <h1>Registration form</h1>
-        <form action="users.php?action=register-user" method="POST">
+        <form action="index.php?action=register-user&controller=users" method="POST">
 
         <?php if ( $isNicknameValid ): ?>
             <label for="nickname">Nickname</label><br/>
