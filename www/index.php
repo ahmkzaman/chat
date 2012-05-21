@@ -1,7 +1,5 @@
 <?php
 
-require_once "../src/functions/common.php";
-
 $controller = "index";
 if ( isset($_REQUEST['controller']) ) {
     $controller = $_REQUEST['controller'];

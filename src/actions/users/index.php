@@ -1,11 +1,17 @@
 <?php
+require_once __DIR__ . '/../../class/Auth.php';
+require_once __DIR__ . '/../../class/User.php';
+require_once __DIR__ . '/../../class/User/Storage.php';
+
+$userStorage = new User_Storage();
+
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     $isNicknameValid = true;
     $nicknameError = "";
     if (!isset($_POST['nickname']) || $_POST['nickname'] == "") {
         $isNicknameValid = false;
         $nicknameError = 'Nickname required';
-    } else if (user_find_by_nickname($_POST['nickname']) === false) {
+    } else if ($userStorage->findUserByNickname($_POST['nickname']) === false) {
         $isNicknameValid = false;
         $nicknameError = "Invalid nickname";
     }
@@ -16,9 +22,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         $isPasswordValid = false;
         $passwordError = 'Password required';
     } else {
-        $userInfo = user_find_by_nickname($_POST['nickname']);
-        if ($userInfo !== false) {
-            if ($userInfo['password'] != md5($_POST['password'])) {
+        $user = $userStorage->findUserByNickname($_POST['nickname']);
+        if ($user !== false) {
+            if ($user->getPassword() != md5($_POST['password'])) {
                 $isPasswordValid = false;
                 $passwordError = "Incorrect password";
             }
@@ -26,7 +32,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     }
 
     if ($isNicknameValid && $isPasswordValid) {
-        user_login($_POST['nickname']);
+        $auth = new Auth();
+        $user = $userStorage->findUserByNickname($_POST['nickname']);
+        $auth->login($user);
         header("location: index.php");
     } else {
         $nickname = $_POST['nickname'];

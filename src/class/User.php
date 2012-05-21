@@ -7,6 +7,8 @@ class User {
     
     public function setNickname($nickname) {
         $this->nickname = $nickname;
+        
+        return $this;
     }
     
     public function getNickname() {
@@ -15,6 +17,7 @@ class User {
     
     public function setEmail($email) {
         $this->email = $email;
+        return $this;
     }
     
     public function getEmail() {
@@ -23,6 +26,8 @@ class User {
     
     public function setPassword($password) {
         $this->password = $password;
+        return $this;
+        
     }
     
     public function getPassword() {

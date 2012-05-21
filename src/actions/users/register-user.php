@@ -1,4 +1,8 @@
 <?php
+require_once __DIR__ . '/../../class/User/Storage.php';
+require_once __DIR__ . '/../../class/User.php';
+
+$userStorage = new User_Storage();
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     
     $isNicknameValid = true;
@@ -9,7 +13,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     } else if (preg_match('/\s/', $_POST['nickname'])) {
         $isNicknameValid = false;
         $nicknameError = 'Invalid nickname. Nickname should contain no spaces.<br />';
-    } else if (user_find_by_nickname($_POST['nickname']) !== false) {
+    } else if ($userStorage->findUserByNickname ($_POST['nickname']) !== false) {
         $isNicknameValid = false;
         $nicknameError = "This username is aready taken";
     }
@@ -22,7 +26,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     } else if (!preg_match('/^[^0-9][a-zA-Z0-9_]*([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/i', $_POST['email'])) {
         $isEmailValid = false;
         $emailError = 'Email invalid';
-    } else if (user_find_by_email($_POST['email']) !== false) {
+    } else if ($userStorage->findUserByEmail ($_POST['email']) !== false) {
         $isEmailValid = false;
         $emailError = "This e-mail is aready taken";
     }
@@ -48,7 +52,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     }
 
     if ($isConfPassValid && $isEmailValid && $isNicknameValid && $isPasswordValid) {
-        user_register($_POST['nickname'], $_POST['email'], $_POST['password']);
+        $user = new User();
+        $user->setNickname($_POST['nickname'])
+            ->setEmail($_POST['email'])
+            ->setPassword($_POST['password']);
+        $userStorage->addUser($user);
         // 2. Send email with confirmation link
 
         header("location: index.php");

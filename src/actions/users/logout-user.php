@@ -1,7 +1,6 @@
-<?php
-    
-$sessDir = "../data/sess";
-$currentCookie = $_COOKIE['chatSessId'];
-$usersFile = $sessDir . "/" . $currentCookie;
-unlink($usersFile);
-header("location: index.php");
+<?php   
+require_once __DIR__ . '/../../class/Auth.php';
+
+$auth= new Auth();
+$auth->logout();
+

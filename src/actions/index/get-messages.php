@@ -1,8 +1,10 @@
 <?php
-
+require_once '../src/class/Auth.php';
 require_once '../src/class/Chat.php';
+require_once '../src/class/User.php';
 
-if ( user_is_logged_in() ) {
+$auth = new Auth();
+if ($auth->getLoggedInUser() !== false) {
     $chat = new Chat();
     echo $chat->getMessages(50);
 } else {

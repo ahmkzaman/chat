@@ -10,7 +10,7 @@
     <body>
         
         <div id="wraper">
-            <div class =" logout"><?php echo user_get_logged_in_nickname() ?>, <a id="logoutBtn" href="index.php?action=logout-user&controller=users" >logout</a></div>
+            <div class =" logout"><?php echo htmlspecialchars($user->getNickname()) ?>, <a id="logoutBtn" href="index.php?action=logout-user&controller=users" >logout</a></div>
             <h1>Chat Local</h1>
             <div id="message_viewer">Message viewer</div>
         <form id="chat_form">
