@@ -11,20 +11,20 @@
         <h1>Login</h1>
         <form action="index.php?action=index&controller=users" method="POST">
             
-            <?php if ( $isNicknameValid ): ?>
+            <?php if ( $form->isFieldValid('nickname') ): ?>
                 <label for="nickname">Nickname</label><br/>
-                <input id="nickname" type="text" value="<?php echo htmlspecialchars($nickname) ?>" name="nickname" /><br/><br/>
+                <input id="nickname" type="text" value="<?php echo htmlspecialchars($form->getFieldValue('nickname')) ?>" name="nickname" /><br/><br/>
             <?php else: ?>
                 <label for="nickname" class="error">Nickname</label><br/>
-                <input id="nickname" type="text" value="<?php echo htmlspecialchars($nickname) ?>" name="nickname" class="error" /><span class="error"><?php echo $nicknameError ?></span><br/><br/>
+                <input id="nickname" type="text" value="<?php echo htmlspecialchars($form->getFieldValue('nickname')) ?>" name="nickname" class="error" /><span class="error"><?php echo $form->getFieldError('nickname') ?></span><br/><br/>
             <?php endif ?>
             
-            <?php if ($isPasswordValid): ?>
+            <?php if ( $form->isFieldValid('password')): ?>
                 <label for="password">Password</label><br/>
-                <input id="password" type="password" value="<?php echo htmlspecialchars($password)  ?>" name="password" /><br/><br/>
+                <input id="password" type="password" value="<?php echo htmlspecialchars($form->getFieldValue('password'))  ?>" name="password" /><br/><br/>
             <?php else: ?>
                 <label for="password" class="error">Password</label><br/>
-                <input id="password" type="password" value="<?php echo htmlspecialchars($password) ?>" name="password" class="error" /><span class="error"><?php echo $passwordError ?></span><br/><br/>
+                <input id="password" type="password" value="<?php echo htmlspecialchars($form->getFieldValue('password')) ?>" name="password" class="error" /><span class="error"><?php echo $form->getFieldError('password') ?></span><br/><br/>
             <?php endif ?>
             
                 <input type="submit" value="Login" />
