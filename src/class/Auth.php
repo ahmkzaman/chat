@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/User.php';
-require_once __DIR__ . '/User/Storage.php';
 
 class Auth {
     public function login(User $user) {
@@ -18,6 +16,9 @@ class Auth {
     }
     
     public function getLoggedInUser() {
+        if (!isset ($_COOKIE['chatSessId'])) {
+            return false;
+        }
         if ( !file_exists("../data/sess/" . $_COOKIE['chatSessId']) ) {
             return false;
         }

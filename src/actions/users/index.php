@@ -1,9 +1,4 @@
 <?php
-require_once __DIR__ . '/../../class/Auth.php';
-require_once __DIR__ . '/../../class/User.php';
-require_once __DIR__ . '/../../class/User/Storage.php';
-require_once __DIR__ . '/../../Drozd/Validator/Email.php';
-
 
 $form = new LoginForm($_POST);
 

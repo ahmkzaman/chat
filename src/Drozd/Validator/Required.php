@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/Interface.php';
 
 class Drozd_Validator_Required implements Drozd_Validator_Interface 
 {

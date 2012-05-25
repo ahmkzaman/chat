@@ -1,5 +1,4 @@
 <?php
-require_once '../src/class/User.php';
 
 class User_Storage {
     public function addUser(User $user) {

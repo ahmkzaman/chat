@@ -1,5 +1,7 @@
 <?php
 
+include 'autoload.php';
+
 $controller = "index";
 if ( isset($_REQUEST['controller']) ) {
     $controller = $_REQUEST['controller'];

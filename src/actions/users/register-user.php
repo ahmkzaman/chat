@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../../class/User/Storage.php';
-require_once __DIR__ . '/../../class/User.php';
 
 $userStorage = new User_Storage();
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {

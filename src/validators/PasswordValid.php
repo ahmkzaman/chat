@@ -7,6 +7,7 @@ class PasswordValid implements Drozd_Validator_Interface
     
     public function isValid($value, $data = array()) 
     {
+        $userStorage = new User_Storage();
         $user = $userStorage->findUserByNickname($data['nickname']);
         
         if ( $user === false ) {
