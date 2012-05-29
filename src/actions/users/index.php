@@ -10,6 +10,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         $auth = new Auth();
         $auth->login($user);
         header("location: index.php");
+        var_dump($auth);
     } else {
         include "../src/templates/login-form.php";
     }

@@ -11,20 +11,20 @@
         <h1>Registration form</h1>
         <form action="index.php?action=register-user&controller=users" method="POST">
 
-        <?php if ( $isNicknameValid ): ?>
+        <?php if ( $form->isFieldValid('nickname') ): ?>
             <label for="nickname">Nickname</label><br/>
-            <input id="nickname" type="text" value="<?php echo htmlspecialchars($nickname) ?>" name="nickname" /><br/><br/>
+            <input id="nickname" type="text" value="<?php echo htmlspecialchars( $form->getFieldValue('nickname') ) ?>" name="nickname" /><br/><br/>
         <?php else: ?>
             <label for="nickname" class="error">Nickname</label><br/>
-            <input id="nickname" type="text" value="<?php echo htmlspecialchars($nickname) ?>" name="nickname" class="error" /><span class="error"><?php echo $nicknameError ?></span><br/><br/>
+            <input id="nickname" type="text" value="<?php echo htmlspecialchars( $form->getFieldValue('nickname') ) ?>" name="nickname" class="error" /><span class="error"><?php echo $form->getFieldError('nickname') ?></span><br/><br/>
         <?php endif; ?>
             
-        <?php if ($isEmailValid ) :?>
+        <?php if ($form->isFieldValid('email') ) :?>
                 <label for="email">E-Mail</label><br/>
-                <input id="email" type="text" value="<?php echo  htmlspecialchars($email) ?>" name="email" /><br/><br/>
+                <input id="email" type="text" value="<?php echo  htmlspecialchars( $form->getFieldValue('email') ) ?>" name="email" /><br/><br/>
         <?php else: ?>
                 <label for="email" class="error">E-Mail</label><br/>
-                <input id="email" type="text" value="<?php echo  htmlspecialchars($email) ?> " name="email" class="error" /><span class="error"><?php echo $emailError ?></span><br/><br/>
+                <input id="email" type="text" value="<?php echo  htmlspecialchars( $form->getFieldValue('email') ) ?> " name="email" class="error" /><span class="error"><?php echo $form->getFieldError('email') ?></span><br/><br/>
         <?php endif  ?>
 
         <?php if ($isPasswordValid): ?>

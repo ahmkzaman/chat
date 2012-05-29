@@ -1,20 +1,32 @@
 <?php
 
+$form = new RegistrationForm($_POST);
+
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+    if ( $form->isValid() ) {
+        $user = new User();
+        $user->setNickname($_POST['nickname'])
+            ->setEmail($_POST['email'])
+            ->setPassword($_POST['password']);
+        $userStorage = new User_Storage();
+        $userStorage->addUser($user);
+        
+        header("location: index.php");
+    } else {
+        include "../src/templates/registration-form.php";
+    }
+    
+} else {
+    include "../src/templates/registration-form.php";
+}
+
+return;
+
 $userStorage = new User_Storage();
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     
-    $isNicknameValid = true;
-    $nicknameError = "";
-    if (!isset($_POST['nickname']) || $_POST['nickname'] == "") {
-        $isNicknameValid = false;
-        $nicknameError = 'Nickname required';
-    } else if (preg_match('/\s/', $_POST['nickname'])) {
-        $isNicknameValid = false;
-        $nicknameError = 'Invalid nickname. Nickname should contain no spaces.<br />';
-    } else if ($userStorage->findUserByNickname ($_POST['nickname']) !== false) {
-        $isNicknameValid = false;
-        $nicknameError = "This username is aready taken";
-    }
+
 
     $isEmailValid = true;
     $emailError = "";

@@ -6,7 +6,7 @@ class Drozd_Validator_Required implements Drozd_Validator_Interface
     
     public function isValid($value, $data = array()) 
     {
-        if ( $value !== null ) {
+        if ( $value !== null && trim($value) != "" ) {
             return true;
         }
         
