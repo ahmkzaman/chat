@@ -19,6 +19,7 @@ class LoginForm extends Drozd_Form
                 ),
                 'PasswordValid' => array(
                     PasswordValid::NOT_VALID => 'Invalid password',
+                    PasswordValid::USER_NOT_FOUND => 'User not found',
                 )
             ),
         );

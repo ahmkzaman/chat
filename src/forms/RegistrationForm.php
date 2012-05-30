@@ -15,19 +15,36 @@ class RegistrationForm extends Drozd_Form {
                 ),
                 
             ),
+            
+            'email' => array(
+                 'Drozd_Validator_Required' => array(
+                    Drozd_Validator_Required::IS_REQUIRED => 'Email is required',
+                ),
+                
+                'Drozd_Validator_Email' => array(
+                    Drozd_Validator_Email::INVALID_EMAIL => 'Email invalid',
+                ),
+                'EmailUnique' => array(
+                    EmailUnique::NOT_UNIQUE => 'This e-mail is already taken',
+                ),
+            ),
+            
             'password' => array(
                 'Drozd_Validator_Required' => array(
                     Drozd_Validator_Required::IS_REQUIRED => 'Password is required',
                 ),
-                'PasswordValid' => array(
-                    PasswordValid::NOT_VALID => 'Invalid password',
+                'RegPasswordValid' => array(
+                    RegPasswordValid::NOT_LONG => 'Password must contain 8 or more symbols',
                 )
             ),
             
-            'email' => array(
-              'Drozd_Validator_Required' => array(
-              Drozd_Validator_Email::INVALID_EMAIL => '',
-              )
+            'confirm-password' => array(
+                'Drozd_Validator_Required' => array(
+                    Drozd_Validator_Required::IS_REQUIRED => 'Retype your password',
+                ),
+                'ConfPassword' => array(
+                    ConfPassword::NOT_SAME => 'Passwords don\'t match',
+                )
             ),
         );
     }
