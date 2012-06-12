@@ -16,13 +16,19 @@ class Auth {
     }
     
     public function getLoggedInUser() {
-        if (!isset ($_COOKIE['chatSessId'])) {
+        $sessDir = "../data/sess";
+        $currentCookie = $_COOKIE['chatSessId'];
+        $usersFile = $sessDir . "/" . $currentCookie;
+        
+        if (!isset ($currentCookie)) {
             return false;
         }
-        if ( !file_exists("../data/sess/" . $_COOKIE['chatSessId']) ) {
+        if ( !file_exists($usersFile) ) {
             return false;
         }
-        $nickname = file_get_contents("../data/sess/" . $_COOKIE['chatSessId']);
+        $nickname = file_get_contents($usersFile);
+       
+        touch($usersFile);
         
         $storage = new User_Storage();
         return $storage->findUserByNickname($nickname);

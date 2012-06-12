@@ -1,6 +1,8 @@
 <?php
 
-include 'autoload.php';
+error_reporting(E_ALL | E_STRICT);
+
+include '../src/autoload.php';
 
 $controller = "index";
 if ( isset($_REQUEST['controller']) ) {
