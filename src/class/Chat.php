@@ -34,7 +34,7 @@ class Chat {
                     $date = new DateTime();
                     $userTimeStamp = filemtime("../data/sess/". $entry);
                     $currentTimeStamp = $date->getTimestamp();
-                    $userLife = 150;
+                    $userLife = 10;
 
                     if (($userTimeStamp + $userLife) > $currentTimeStamp) {
                         $nickname = file_get_contents("../data/sess/". $entry);
