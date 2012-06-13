@@ -29,11 +29,19 @@ class Chat {
         if ( ($handle = opendir('../data/sess')) !== false ) {
             /* This is the correct way to loop over the directory. */
             while (false !== ($entry = readdir($handle))) {
+                
                 if ($entry != "." && $entry != "..") {
-                    $nickname = file_get_contents("../data/sess/". $entry);
-                    $user = $userStorage->findUserByNickname($nickname);
-                    if ( $user !== false ) {
-                        $result[] = $user;
+                    $date = new DateTime();
+                    $userTimeStamp = filemtime("../data/sess/". $entry);
+                    $currentTimeStamp = $date->getTimestamp();
+                    $userLife = 150;
+
+                    if (($userTimeStamp + $userLife) > $currentTimeStamp) {
+                        $nickname = file_get_contents("../data/sess/". $entry);
+                        $user = $userStorage->findUserByNickname($nickname);
+                        if ( $user !== false ) {
+                            $result[] = $user;
+                        }
                     } 
                 }
             }
@@ -42,4 +50,5 @@ class Chat {
         }
         return $result;  
     }
+    
 }

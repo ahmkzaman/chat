@@ -1,3 +1,7 @@
+<?php
+    $chat = new Chat;
+    $users = $chat->getLoggedInUsers();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,11 +17,21 @@
             <div class =" logout"><?php echo htmlspecialchars($user->getNickname()) ?>, <a id="logoutBtn" href="index.php?action=logout-user&controller=users" >logout</a></div>
             <h1>Chat Local</h1>
             <div id="message_viewer">Message viewer</div>
-        <form id="chat_form">
-        <input id="message_input" type="text" value="Enter message here" />
-        <input id="send_button" type="button" value="Send" />
-        </form>
-
-        <div>
+            <form id="chat_form">
+            <input id="message_input" type="text" value="Enter message here" />
+            <input id="send_button" type="button" value="Send" />
+            </form>
+            
+            <div id="usersList">
+                <span> Online users </hspan>
+                <ul>
+                    <?php foreach($users as $user ): ?>
+                        <li><?php echo htmlspecialchars($user->getNickname()); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+            
+        
     </body>
 </html>

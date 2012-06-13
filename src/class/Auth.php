@@ -1,6 +1,6 @@
 <?php
 
-class Auth {
+class Auth {    
     public function login(User $user) {
         $chatSessIdValue = md5(uniqid($user->getNickname(), true));
         setcookie("chatSessId", $chatSessIdValue);
