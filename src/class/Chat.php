@@ -21,34 +21,4 @@ class Chat {
 
         return implode('<br/>', $messages);
     }
-    
-    public function getLoggedInUsers() {
-        $userStorage = new User_Storage();
-        $result = array();
-         
-        if ( ($handle = opendir('../data/sess')) !== false ) {
-            /* This is the correct way to loop over the directory. */
-            while (false !== ($entry = readdir($handle))) {
-                
-                if ($entry != "." && $entry != "..") {
-                    $date = new DateTime();
-                    $userTimeStamp = filemtime("../data/sess/". $entry);
-                    $currentTimeStamp = $date->getTimestamp();
-                    $userLife = 10;
-
-                    if (($userTimeStamp + $userLife) > $currentTimeStamp) {
-                        $nickname = file_get_contents("../data/sess/". $entry);
-                        $user = $userStorage->findUserByNickname($nickname);
-                        if ( $user !== false ) {
-                            $result[] = $user;
-                        }
-                    } 
-                }
-            }
-            
-            closedir($handle);
-        }
-        return $result;  
-    }
-    
 }

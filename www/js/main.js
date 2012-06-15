@@ -7,6 +7,12 @@ $(function(){
         });
     }, 1000);
     
+    setInterval(function(){
+        $.get('index.php?action=logged-in-users&controller=users', function(data) {
+            $('#usersList div').html(data);
+        });
+    }, 1000);
+    
     $("#send_button").click(function() {
         $.post('index.php?action=post-message',{message:$('#message_input').val()}, function(){
             $('#message_input').attr('value', '');

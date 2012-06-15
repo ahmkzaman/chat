@@ -1,23 +1,17 @@
 <?php
 
 error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 1);
 
 include '../src/autoload.php';
 
-$controller = "index";
-if ( isset($_REQUEST['controller']) ) {
-    $controller = $_REQUEST['controller'];
-}
+$router = new Drozd_Router();
+$controllerName = $router->getControllerName();
+$actionName = $router->getActionName();
 
-$action = 'index';
-if ( isset($_REQUEST['action']) ) {
-    $action = $_REQUEST['action'];
-}  
-
-$dir = "../src/actions/" . $controller . "/";
-if ( file_exists($dir . $action . ".php") ) {
-    include $dir . $action . ".php";   
-} else {
-    include "../src/actions/error/404.php";
-}
+/**
+ * @todo FIX 404 error 
+ */
+$controller = new $controllerName();
+call_user_func(array($controller, $actionName));
 

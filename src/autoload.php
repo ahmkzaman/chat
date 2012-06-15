@@ -53,6 +53,16 @@
         include $file;
     }
     
+    function controllersLoader($class)
+    {
+        $filename = str_replace('_', '/', $class . '.php');
+        $file ='../src/controllers/' . $filename;
+        if (!file_exists($file))
+        {
+            return false;
+        }
+        include $file;
+    }
     
 
     
@@ -60,3 +70,4 @@
     spl_autoload_register('formsLoader');
     spl_autoload_register('drozdLoader');
     spl_autoload_register('validatorLoader');
+    spl_autoload_register('controllersLoader');

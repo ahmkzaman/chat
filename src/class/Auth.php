@@ -1,24 +1,26 @@
 <?php
 
 class Auth {    
+    
+    private $sessDir = "../data/sess/";
+    private $sessId = 'chatSessId';
+    
     public function login(User $user) {
         $chatSessIdValue = md5(uniqid($user->getNickname(), true));
-        setcookie("chatSessId", $chatSessIdValue);
-        $sessDir = "../data/sess";
+        setcookie($this->sessId, $chatSessIdValue);
 
-        if ( !file_exists($sessDir) ) {
-            mkdir($sessDir);
-            chmod($sessDir, 0777);
+        if ( !file_exists($this->sessDir) ) {
+            mkdir($this->sessDir);
+            chmod($this->sessDir, 0777);
         }
         
-        file_put_contents($sessDir . "/" . $chatSessIdValue, $user->getNickname());
-        chmod($sessDir . "/" . $chatSessIdValue, 0777);
+        file_put_contents($this->sessDir . $chatSessIdValue, $user->getNickname());
+        chmod($this->sessDir . $chatSessIdValue, 0777);
     }
     
     public function getLoggedInUser() {
-        $sessDir = "../data/sess";
-        $currentCookie = $_COOKIE['chatSessId'];
-        $usersFile = $sessDir . "/" . $currentCookie;
+        $currentCookie = $_COOKIE[$this->sessId];
+        $usersFile = $this->sessDir . $currentCookie;
         
         if (!isset ($currentCookie)) {
             return false;
@@ -34,11 +36,36 @@ class Auth {
         return $storage->findUserByNickname($nickname);
     }
     
+     public function getLoggedInUsers() {
+        $userStorage = new User_Storage();
+        $result = array();
+         
+        if ( ($handle = opendir($this->sessDir)) !== false ) {
+            while (false !== ($entry = readdir($handle))) {
+                
+                if ($entry != "." && $entry != "..") {
+                    $userTimeStamp = filemtime($this->sessDir . $entry);
+                    $currentTimeStamp = time();
+                    $userLife = 10;
+
+                    if (($userTimeStamp + $userLife) > $currentTimeStamp) {
+                        $nickname = file_get_contents($this->sessDir . $entry);
+                        $user = $userStorage->findUserByNickname($nickname);
+                        if ( $user !== false ) {
+                            $result[] = $user;
+                        }
+                    } 
+                }
+            }
+            
+            closedir($handle);
+        }
+        return $result;  
+    }
+    
     public function logout() {
-        $sessDir = "../data/sess";
-        $currentCookie = $_COOKIE['chatSessId'];
-        $usersFile = $sessDir . "/" . $currentCookie;
+        $currentCookie = $_COOKIE[$this->sessId];
+        $usersFile = $this->sessDir . $currentCookie;
         unlink($usersFile);
-        header("location: index.php");
     }
 }

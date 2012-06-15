@@ -1,7 +1,3 @@
-<?php
-    $chat = new Chat;
-    $users = $chat->getLoggedInUsers();
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,12 +19,8 @@
             </form>
             
             <div id="usersList">
-                <span> Online users </hspan>
-                <ul>
-                    <?php foreach($users as $user ): ?>
-                        <li><?php echo htmlspecialchars($user->getNickname()); ?></li>
-                    <?php endforeach; ?>
-                </ul>
+                <span> Online users </span>
+                <div></div>
             </div>
         </div>
             

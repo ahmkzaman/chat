@@ -1,12 +1,15 @@
 <?php
 
 class User_Storage {
+    
+    private $dataFilePath = "../data/users.dat";
+    
     public function addUser(User $user) {
         $nickname = $user->getNickname();
         $email = $user->getEmail();
         $password = $user->getPassword();
         
-        $filePath = "../data/users.dat";
+        $filePath = $this->dataFilePath;
         $userInfo = $nickname . " " . $email . " " . md5($password) . "\n";
         $fp = fopen($filePath, "a+");     
         chmod($filePath, 0777);
@@ -20,7 +23,7 @@ class User_Storage {
      * @return User
      */
     public function findUserByNickname($nickname) {
-        $usersArray = file('../data/users.dat');
+        $usersArray = file($this->dataFilePath);
         foreach ($usersArray as $value) {
             $userInfo = explode(" ", $value);
             if ($userInfo[0] == $nickname) {
@@ -36,7 +39,7 @@ class User_Storage {
     }
     
     public function findUserByEmail($email) {
-        $usersArray = file('../data/users.dat');
+        $usersArray = file($this->dataFilePath);
         foreach ($usersArray as $value) {
             $userInfo = explode(" ", $value);
             if ($userInfo[1] == $email) {
